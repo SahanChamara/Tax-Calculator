@@ -346,5 +346,79 @@ class taxcalculator{
         }
     }
     // ================================= Payble Tax Calculator ==================================================
-    
+    public static void paybleTax(){
+        Scanner payTax = new Scanner(System.in);
+
+        System.out.println("\t\t\t\t\t\t+----------------------------------------------------------------------------------+");
+        System.out.println("\t\t\t\t\t\t|\t\t\t\t PAYBLE TAX\t\t\t\t           |");
+        System.out.println("\t\t\t\t\t\t+----------------------------------------------------------------------------------+");
+        System.out.println();
+
+        System.out.print("\t\t\t\t\t\t Enter your Employee Payment Per Month \t : ");
+        int salary = payTax.nextInt();
+        System.out.println();
+
+        if(salary>0){
+            double tax = 0;
+            if(salary<100000){
+                System.out.println("\t\t\t\t\t\t\t\t\t You dont have to pay payble Tax");
+                System.out.println();
+
+                char anotherpt1 = 'Y';
+                System.out.print("\t\t\t\t\t\t\t\t\t Do you want to calculate another Payble Tax (Y/N) : ");
+                anotherpt1 = payTax.next().charAt(0);
+
+                if(anotherpt1=='Y' || anotherpt1=='y'){
+                    clearConsole();
+                    paybleTax();
+                } else{
+                    clearConsole();
+                    main(null);
+                }
+            } else if(salary<141667){
+                tax = (salary-100000) * 0.06;
+            } else if(salary<183333){
+                tax = (41667*0.06) + (salary-141667) * 0.12;
+            } else if(salary<225000){
+                tax = (41667*0.06) + (41667*0.12) + (salary-183333) * 0.18;
+            } else if(salary<266667){
+                tax = (41667*0.06) + (41667*0.12) + (41667*0.18) + (salary-225000) * 0.24;
+            } else if(salary<308333){
+                tax = (41667*0.06) + (41667*0.12) + (41667*0.18) + (41667*0.24) + (salary-266667) * 0.30;
+            } else {
+                tax = (416667*0.06) + (41667*0.12) + (41667*0.18) + (41667*0.24) + (41667*0.30) + (salary-308333) *0.36;
+            }
+            System.out.println("\t\t\t\t\t\t you have to pay Payble Tax per month \t : "+String.format("%.2f",tax));
+            System.out.println();
+
+            char anotherpt2 = 'Y';
+            System.out.print("\t\t\t\t\t\t\t\t\t Do you want to calculate another Payble Tax (Y/N) : ");
+            anotherpt2 = payTax.next().charAt(0);
+
+            if(anotherpt2=='Y' || anotherpt2=='y'){
+                clearConsole();
+                paybleTax();
+            } else{
+                clearConsole();
+                main(null);
+            }       
+
+        } else {
+            System.out.println("\t\t\t\t\t\t\t\t\t Invalid Input");
+            System.out.println();
+
+            char againpt='Y';
+            System.out.print("\t\t\t\t\t\t\t\t\t Do you want to calculate Payble Tax Again (Y/N) : ");
+            againpt = payTax.next().charAt(0);
+
+            if(againpt=='Y' || againpt=='y'){
+                clearConsole();
+                paybleTax();
+            } else {
+                clearConsole();
+                main(null);
+            }
+        }
+        payTax.close();
+    }
 }
