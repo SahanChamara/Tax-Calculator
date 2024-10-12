@@ -421,4 +421,82 @@ class taxcalculator{
         }
         payTax.close();
     }
+        // ================================== Income Tax Calculator ====================================================
+        public static void incomeTax(){
+            Scanner inTax = new Scanner(System.in);
+    
+            System.out.println("\t\t\t\t\t\t+----------------------------------------------------------------------------------+");
+            System.out.println("\t\t\t\t\t\t|\t\t\t\t INCOME TAX\t\t\t\t           |");
+            System.out.println("\t\t\t\t\t\t+----------------------------------------------------------------------------------+");
+            System.out.println();
+    
+            System.out.print("\t\t\t\t\t\t Enter your total income per year \t : ");
+            int income = inTax.nextInt();
+            System.out.println();
+    
+            double intax = 0;
+            if(income>0){
+                if(income<1200000){
+                    System.out.println("\t\t\t\t\t\t\t\t you dont have to pay Income Tax...");
+                    System.out.println();
+    
+                    char anotherin1 = 'Y';
+                    System.out.print("\t\t\t\t\t\t\t\t\t Do you want to calculate another Income Tax (Y/N) : ");
+                    anotherin1 = inTax.next().charAt(0);
+    
+                    if(anotherin1=='Y' || anotherin1=='y'){
+                        clearConsole();
+                        incomeTax();
+                    } else{
+                        clearConsole();
+                        main(null);
+                    }
+    
+                }else if(income<1700000){
+                    intax = (income-1200000) * 0.06;
+                }else if(income<2200000){
+                    intax = (500000*0.06) + (income-1700000) * 0.12;
+                }else if(income<2700000){
+                    intax = (500000*0.06) + (500000*0.12) + (income-2200000) * 0.18;
+                }else if(income<3200000){
+                    intax = (500000*0.06) + (500000*0.12) + (500000*0.18) + (income-2700000) * 0.24;
+                }else if(income<3700000){
+                    intax = (500000*0.06) + (500000*0.12) + (500000*0.18) + (500000*0.24) + (income-3200000) * 0.30;
+                }else{
+                    intax = (500000*0.06) + (500000*0.12) + (500000*0.18) + (500000*0.24) + (500000*0.30) + (income-3700000) * 0.36;
+                }
+                System.out.println("\t\t\t\t\t\t you have to pay Income Tax Per Year \t : "+String.format("%.2f",intax));
+                System.out.println();
+    
+                char anotherin2 = 'Y';
+                System.out.print("\t\t\t\t\t\t\t\t\t Do you want to calculate another Income Tax (Y/N) : ");
+                anotherin2 = inTax.next().charAt(0);
+    
+                if(anotherin2=='Y' || anotherin2=='y'){
+                    clearConsole();
+                    incomeTax();
+                } else {
+                    clearConsole();
+                    main(null);
+                }
+    
+            } else {
+                System.out.println("\t\t\t\t\t\t\t\t\t Invalid input");
+                System.out.println();
+    
+                char againintax='Y';
+                System.out.print("\t\t\t\t\t\t\t\t\t Do you want to calculate Payble Tax Again (Y/N) : ");
+                againintax = inTax.next().charAt(0);
+    
+                if(againintax=='Y' || againintax=='y'){
+                    clearConsole();
+                    paybleTax();
+                } else {
+                    clearConsole();
+                    main(null);
+                }
+            }
+    
+            inTax.close();
+        }
 }
