@@ -77,20 +77,20 @@ class taxcalculator{
                 withHoldingTax();
             break;
 
-            // case 2:
-            //     clearConsole();
-            //     //paybleTax();
-            // break;
+            case 2:
+                clearConsole();
+                paybleTax();
+                break;
 
-            // case 3:
-            //     clearConsole();
-            //     //incomeTax();
-            // break;
+            case 3:
+                clearConsole();
+                incomeTax();
+                break;
 
-            // case 4:
-            //     clearConsole();
-            //     //ssclTax();
-            // break;
+            case 4:
+                clearConsole();
+                ssclTax();
+                break;
 
             // case 5:
             //     clearConsole();
@@ -499,4 +499,59 @@ class taxcalculator{
     
             inTax.close();
         }
+          //====================================================== Social Security Contribution Levt tax Calculator =======================================
+    public static void ssclTax(){
+        Scanner ssConTax = new Scanner(System.in);
+
+        System.out.println("\t\t\t\t\t\t+----------------------------------------------------------------------------------+");
+        System.out.println("\t\t\t\t\t\t|\t\t SOCIAL SECURITY CONTRIBUTION LEVY (SSCL) TAX \t\t           |");
+        System.out.println("\t\t\t\t\t\t+----------------------------------------------------------------------------------+");
+        System.out.println();
+
+        System.out.print("\t\t\t\t\t\t Enter Value of Good or Service \t : ");
+        int sscLevy = ssConTax.nextInt();
+        System.out.println();
+
+        if(sscLevy>0){
+            // Step 1 -> add sale tax to the value            meka first step eka...............
+            double saleTax = sscLevy * 0.025;
+            double afterSaleTax = saleTax+sscLevy;
+
+            // Step 2 sale tax andd vat sum eka..................
+            double vat = afterSaleTax*0.15;
+            double totalSsclTax = saleTax+vat;
+
+            System.out.println("\t\t\t\t\t\t You have to pay SSCL Tax \t\t : "+String.format("%.2f",totalSsclTax));
+            System.out.println();
+
+            char anotherSsclt = 'Y';
+            System.out.print(" \t\t\t\t\t\t\t\t\t Do you want to calculate another SSCL Tax (Y/N) : ");
+            anotherSsclt = ssConTax.next().charAt(0);
+
+            if(anotherSsclt=='Y' || anotherSsclt=='y'){
+                clearConsole();
+                ssclTax();
+            }else{
+                clearConsole();
+                main(null);
+            }
+
+        } else {
+            System.out.println("\t\t\t\t\t\t Invalid Input");
+            System.out.println();
+
+            char agianSsclt = 'Y';
+            System.out.print("\t\t\t\t\t\t Do you want to calculate SSCL Tax again (Y/N) : ");
+            agianSsclt = ssConTax.next().charAt(0);
+
+            if(agianSsclt=='Y' || agianSsclt=='y'){
+                clearConsole();
+                ssclTax();
+            }else{
+                clearConsole();
+                main(null);
+            }
+        }
+        ssConTax.close();
+    }
 }
