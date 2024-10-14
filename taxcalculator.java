@@ -554,4 +554,166 @@ class taxcalculator{
         }
         ssConTax.close();
     }
+     
+    // ========================= Leasing Payment Calculator ==================================
+    public static void leasingPayment(){
+        Scanner leasePmtcalculationoption = new Scanner(System.in);
+
+        System.out.println("\t\t\t\t\t\t+----------------------------------------------------------------------------------+");
+        System.out.println("\t\t\t\t\t\t|\t\t\t\t LEASING PAYMENT \t\t\t           |");
+        System.out.println("\t\t\t\t\t\t+----------------------------------------------------------------------------------+");
+        System.out.println();
+
+        System.out.println("\t\t\t\t\t\t\t\t[1] Calculate Monthly Installment");
+        System.out.println();
+
+        System.out.println("\t\t\t\t\t\t\t\t[2] Search Leasing Category");
+        System.out.println();
+
+        System.out.println("\t\t\t\t\t\t\t\t[3] Find Leasing Amount");
+        System.out.println();
+
+        System.out.println("\t\t\t\t\t\t\t\t[4] Exit");
+        System.out.println();
+
+        System.out.print("\t\t\t\t\t\tEnter an Option to continues -> ");
+        int leasingPaymentOption = leasePmtcalculationoption.nextInt();
+
+        //============================================= Switching the leasing payment categories =====================================
+
+        switch(leasingPaymentOption){
+            case 1:
+                clearConsole();
+                monthlyInstallmentcalc();
+            break;
+
+            case 2:
+                clearConsole();
+                serachLeasing();
+            break;
+
+            case 3:
+                clearConsole();
+                findLeasingAmount();
+            break;
+
+            case 4:
+            return;
+        }
+        leasePmtcalculationoption.close();    
+    }
+    
+    // ========================== Calculating Monthly Installment (lease payment) ======================================
+
+    public static void monthlyInstallmentcalc(){
+        Scanner leasingpmt = new Scanner(System.in);
+
+        System.out.println("\t\t\t\t\t\t+----------------------------------------------------------------------------------+");
+        System.out.println("\t\t\t\t\t\t|\t\t\t\t CALCULATE LEASING PAYMENT\t\t           |");
+        System.out.println("\t\t\t\t\t\t+----------------------------------------------------------------------------------+");
+        System.out.println();
+
+        System.out.print("\t\t\t\t\t\t Enter Lease Amount \t\t : ");
+        double leaseAmount = leasingpmt.nextDouble();
+        System.out.println();
+
+        // ============= Validations =======================================
+        if(leaseAmount>0){
+            System.out.print("\t\t\t\t\t\t Enter Annual Interrest Rate \t : ");
+            double annualInt = leasingpmt.nextDouble();
+            System.out.println();
+
+            if(annualInt>0){
+                System.out.print("\t\t\t\t\t\t Enter Number of Year \t\t : ");
+                int year = leasingpmt.nextInt();
+                System.out.println();
+
+                if(year<=5){
+                    mCalculationPartOnly(leaseAmount,annualInt,year);
+
+                    char anotherMinstallment = 'Y';
+                    System.out.print("\t\t\t\t\t\t\t Do you want to calculate another Monthly Installment (Y/N) : ");
+                    anotherMinstallment = leasingpmt.next().charAt(0);
+
+                    if(anotherMinstallment=='Y' || anotherMinstallment=='y'){
+                        clearConsole();
+                        monthlyInstallmentcalc();
+                    } else {
+                        clearConsole();
+                        main(null);
+                    }
+                    
+                } else{
+                    boolean validation=true;
+
+                    L1:while(validation==true){
+                        System.out.println("\t\t\t\t\t\t\t\t Invalid number of year....Enter the correct value again.......");
+
+                        System.out.print("\t\t\t\t\t\t Enter Number of Year \t\t : ");
+                        year = leasingpmt.nextInt();
+                        System.out.println();
+
+                        if(year<=5){
+                            mCalculationPartOnly(leaseAmount,annualInt,year);
+
+                            char anotherMinstallment2 = 'Y';
+                            System.out.print("\t\t\t\t\t\t\t\t\t Do you want to calculate another Monthly Installment (Y/N) : ");
+                            anotherMinstallment2 = leasingpmt.next().charAt(0);
+
+                            if(anotherMinstallment2=='Y' || anotherMinstallment2=='y'){
+                                clearConsole();
+                                monthlyInstallmentcalc();
+                            } else {
+                                clearConsole();
+                                main(null);
+                            }
+                        validation=false;
+                        } else {
+                            continue L1;
+                           
+                        }
+                    }
+                         
+                }
+
+            } else {
+                System.out.println("Enter Valid Annual Interest Rate");
+            }
+           
+        } else{
+            // invalidation
+            System.out.println("\t\t\t\t\t\t\t\t invalid Lease Amount");
+            System.out.println();
+
+            char againMonthlyInstall = 'Y';
+            System.out.print("\t\t\t\t\t\t\t\t\t Do you want to calculate Monthly Installment Again (Y/N) : ");
+            againMonthlyInstall = leasingpmt.next().charAt(0);
+
+            if(againMonthlyInstall=='Y' || againMonthlyInstall=='y'){
+                clearConsole();
+                monthlyInstallmentcalc();
+            } else {
+                clearConsole();
+                main(null);
+            }
+        }
+
+        leasingpmt.close();
+    }
+
+    // ========================================= ## calculation Part Method (this is monthly installment calculation part only) ======================================
+    public static void mCalculationPartOnly(double leaseAmount,double annualInt,int year){
+        // ========== calculation start ================
+        double monthlyInstallment = 0;
+        double numberOfMonth = year*12;
+        double i = annualInt/100/12;
+        
+        monthlyInstallment = leaseAmount*i / (1 - (1 / Math.pow(1 + i,numberOfMonth)));
+
+        System.out.println("\t\t\t\t\t\t Your Monthly Installment \t : "+String.format("%.2f",monthlyInstallment));
+        System.out.println();
+        
+    } // ================= end of calculation part ============================
+     
+    
 }
