@@ -715,5 +715,143 @@ class taxcalculator{
         
     } // ================= end of calculation part ============================
      
-    
+    public static void serachLeasing(){
+        Scanner serachLease = new Scanner(System.in);
+
+        System.out.println("\t\t\t\t\t\t+----------------------------------------------------------------------------------+");
+        System.out.println("\t\t\t\t\t\t|\t\t\t\t Search Leasing Category\t\t           |");
+        System.out.println("\t\t\t\t\t\t+----------------------------------------------------------------------------------+");
+        System.out.println();
+
+        System.out.print("\t\t\t\t\t\t Enter Lease Amount \t\t : ");
+        double leaseAmount = serachLease.nextDouble();
+        System.out.println();
+
+        System.out.print("\t\t\t\t\t\t Enter Annual Interrest Rate \t : ");
+        double annualInt = serachLease.nextDouble();
+        System.out.println();
+
+        if(leaseAmount>0 && annualInt>0){
+            double monthlyInstallment = 0;
+            double numberOfMonth = 3*12;
+            double i = annualInt/100/12;
+        
+            monthlyInstallment = leaseAmount*i / (1 - (1 / Math.pow(1 + i,numberOfMonth)));
+
+            System.out.println("\t\t\t\t\t\t Your Monthly Installment for 3 Year leasing Plan \t : "+String.format("%.2f",monthlyInstallment));
+            //System.out.println();
+
+            // =========== monthly installment 4 year ===================
+            monthlyInstallment = 0;
+            numberOfMonth = 4*12;
+            i = annualInt/100/12;
+        
+            monthlyInstallment = leaseAmount*i / (1 - (1 / Math.pow(1 + i,numberOfMonth)));
+
+            System.out.println("\t\t\t\t\t\t Your Monthly Installment for 4 Year leasing Plan \t : "+String.format("%.2f",monthlyInstallment));
+            //System.out.println();
+
+            // ============================ monthly installment 5 year =====================
+            monthlyInstallment = 0;
+            numberOfMonth = 5*12;
+            i = annualInt/100/12;
+        
+            monthlyInstallment = leaseAmount*i / (1 - (1 / Math.pow(1 + i,numberOfMonth)));
+
+            System.out.println("\t\t\t\t\t\t Your Monthly Installment for 5 Year leasing Plan \t : "+String.format("%.2f",monthlyInstallment));
+            System.out.println();
+
+            char anothserachLease = 'Y';
+            System.out.print("\t\t\t\t\t\t\t Do you want to Search Another Leasing Category (Y/N) : ");
+            anothserachLease = serachLease.next().charAt(0);
+
+            if(anothserachLease=='Y' || anothserachLease=='y'){
+                clearConsole();
+                serachLeasing();
+            } else{
+                clearConsole();
+                main(null);
+            }
+
+        } else{
+            System.out.println("\t\t\t\t\t\t\t\t Invalid Input");
+            System.out.println();
+
+            char againSserachLease = 'Y';
+            System.out.print("\t\t\t\t\t\t\t\t\t Do you want to calculate Serach Leasing Category Again (Y/N) : ");
+            againSserachLease = serachLease.next().charAt(0);
+
+            if(againSserachLease=='Y' || againSserachLease=='y'){
+                clearConsole();
+                monthlyInstallmentcalc();
+            } else {
+                clearConsole();
+                main(null);
+            }
+        }
+        serachLease.close();
+    }
+    public static void findLeasingAmount(){
+        Scanner flAmount = new Scanner(System.in);
+
+        System.out.println("\t\t\t\t\t\t+----------------------------------------------------------------------------------+");
+        System.out.println("\t\t\t\t\t\t|\t\t\t\t Find Leasing Category\t\t\t           |");
+        System.out.println("\t\t\t\t\t\t+----------------------------------------------------------------------------------+");
+        System.out.println();
+
+        System.out.print("\t\t\t\t\t\t Enter the Monthly Lease Payment Amount you can afford \t : ");
+        double affordAmount = flAmount.nextDouble();
+        System.out.println();
+
+        System.out.print("\t\t\t\t\t\t Enter number of Year \t\t\t\t\t : ");
+        int year = flAmount.nextInt();
+        System.out.println();
+
+        System.out.print("\t\t\t\t\t\t Enter Annual Interrest Rate \t\t\t\t : ");
+        double annualInt = flAmount.nextDouble();
+        System.out.println();
+
+        if(affordAmount>0 && year<=5 && annualInt>0){
+            double leaseAmountCalc = 0;
+            double numberOfMonth = year*12;
+            double i = annualInt/100/12;
+        
+            leaseAmountCalc = affordAmount/i * (1 - (1 / Math.pow(1 + i,numberOfMonth)));
+
+            double roundLeaseAmount = Math.round(leaseAmountCalc/1)*1;
+           
+            System.out.println("\t\t\t\t\t\t Your Monthly Installment \t\t\t\t : "+String.format("%.2f",roundLeaseAmount));
+            System.out.println();
+
+            char anothLeaseAmount = 'Y';
+            System.out.print("\t\t\t\t\t\t\t\t\t Do you want to Search Another Lease Amount (Y/N) : ");
+            anothLeaseAmount = flAmount.next().charAt(0);
+
+            if(anothLeaseAmount=='Y' || anothLeaseAmount=='y'){
+                clearConsole();
+                findLeasingAmount();
+            } else{
+                clearConsole();
+                main(null);
+            }
+
+        } else{
+            System.out.println("\t\t\t\t\t\t\t Invalid Enter");
+            System.out.println();
+
+            char againLeaseAmount = 'Y';
+            System.out.print("\t\t\t\t\t\t\t\t\t Do you want to calculate Lease Amount Again(Y/N) : ");
+            againLeaseAmount = flAmount.next().charAt(0);
+
+            if(againLeaseAmount=='Y' || againLeaseAmount=='y'){
+                clearConsole();
+                findLeasingAmount();
+            } else {
+                clearConsole();
+                main(null);
+            }
+        }
+
+        flAmount.close();
+    }
 }
